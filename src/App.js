@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useContext } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { AppAuthContext } from './contex/AppAuthContexProvider';
+import HomePage from './pages/HomePage';
+import LogInPage from './pages/LogInPage';
+import "./style.scss"
 function App() {
+  const {appAuth,currentUser}=useContext(AppAuthContext);
+console.log(currentUser);
+const ProtectedHomeRoute=({children})=>{
+  if (!(currentUser && currentUser.emailVerified)){
+    return <Navigate to="/login"/>;
+  }
+  return children;
+}
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path='/'>
+          <Route index element={<ProtectedHomeRoute><HomePage /></ProtectedHomeRoute>}></Route>
+          <Route path='login' element={<LogInPage />}></Route>
+          {/* <Route path={"*"}>{ <h1>No Route</h1>}</Route> */}
+         
+        </Route>
+          {/* <Route path="/redirect" element={ <h1>No Route</h1> } /> */}
+      
+      </Routes>
+    </BrowserRouter>
+  )
+  
 }
 
 export default App;
