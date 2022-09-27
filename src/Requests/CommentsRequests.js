@@ -1,5 +1,4 @@
 import axios from "axios";
-import jsonpAdapter from "axios-jsonp";
 
 export class CommentsRequests {
     static async createComment(comment){
