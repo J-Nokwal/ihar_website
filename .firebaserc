@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "ihar-7ab4b"
+  },
+  "targets": {
+    "ihar-7ab4b": {
+      "hosting": {
+        "iheardarumor": [
+          "iheardarumor"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

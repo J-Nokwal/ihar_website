@@ -24,7 +24,11 @@ export class UsersRequests {
             );
             return response.data;
         }  catch (error) {
-            console.log(error)
+            if (error.response.status===400 && error.response.data.code=="1002"){
+                error.code="1002"
+                throw error;
+            }
+            
             throw error;
         }
     }

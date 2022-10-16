@@ -16,6 +16,8 @@ export class CommentsRequests {
         }
     }
     static async getAllCommentForPost(postId){
+
+
         try {
             var response =await axios({
                 url:`/comment/all/${postId}`,
@@ -33,7 +35,6 @@ export class CommentsRequests {
             var response =await axios({
                 url:`/comment/${id}`,
                 method:"delete",
-                data:user,
             }
             );
             return response.data;

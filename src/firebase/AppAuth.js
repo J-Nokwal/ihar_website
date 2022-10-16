@@ -8,7 +8,8 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     updateProfile,
-    signOut
+    signOut,
+    getAdditionalUserInfo
 
 } from 'firebase/auth'
 
@@ -16,15 +17,28 @@ import {
 class AppAuth {
     constructor() {
         this.auth = coreAuth;
-        this.AuthChangeFunction=(user)=>{};
-        this.isAuthStreamOn=false;
-
+        this.AuthChangeFunction = (user) => { };
+        this.isAuthStreamOn = false;
+    }
+    isAuthenticated = () => {
+        console.log("is authenticated function current user: ", this.auth.currentUser);
+        // this.auth.onAuthStateChanged((auth)=>{
+        //     console.log(auth);
+        //     if (auth!==null && !auth?.isAnonymous  && !auth?.emailVerified){
+        //         console.log("email not verified")
+        //     }
+        // })
+        return this.auth.currentUser != null
+    };
+    additionalUserInfo = async (user) => {
+        // getAdditionalUserInfo()
+        return getAdditionalUserInfo(user);
     }
     async signInWithGoogle() {
         try {
             const provider = new GoogleAuthProvider();
             await signInWithPopup(this.auth, provider)
-            .then((result) => {
+                .then((result) => {
                     // This gives you a Google Access Token. You can use it to access the Google API.
                     const credential = GoogleAuthProvider.credentialFromResult(result);
                     const token = credential.accessToken;
@@ -40,6 +54,7 @@ class AppAuth {
             const email = error.customData.email;
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
+            console.log(error);
             throw Error("Error while siging with google")
         }
 
@@ -91,7 +106,7 @@ class AppAuth {
         };
         try {
             var userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
-            
+
         } catch (error) {
             if (error.code === 'weak-password') {
                 throw Error("The password provided is too weak");
@@ -101,9 +116,9 @@ class AppAuth {
             }
             else
                 throw Error('Error while creating Account')
-            }
-            try {
-                await sendEmailVerification(userCredential.user, actionCodeSettings);
+        }
+        try {
+            await sendEmailVerification(userCredential.user, actionCodeSettings);
         } catch (error) {
             throw Error("Error while Sending Email Verification Mail.");
         }
@@ -127,7 +142,7 @@ class AppAuth {
         };
         try {
             var userCredential = await signInWithEmailAndPassword(this.auth, emailAdress, password);
-            
+
         } catch (error) {
             if (error.code === 'user-not-found') {
                 throw Error("No user found for that email.",);
@@ -147,7 +162,7 @@ class AppAuth {
     async signInAnonymously() {
         try {
             var userCredential = await signInAnonymously(this.auth);
-            
+
         } catch (error) {
             throw Error("Error while Signing in.")
         }
@@ -162,13 +177,14 @@ class AppAuth {
         } catch (error) {
             throw Error("Error Whilr Updating data.");
         }
-        
+
     }
-    async signOut(){
-        await signOut(this.auth.currentUser).catch((e)=>{
+    async appSignOut() {
+        await signOut(this.auth).catch((e) => {
             throw Error("Error while Signing out");
         })
+        console.log("user loged out");
     }
 }
 export const auth = coreAuth;
-export const appAuth =new AppAuth()
+export const appAuth = new AppAuth()

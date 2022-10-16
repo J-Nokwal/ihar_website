@@ -5,16 +5,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 import { AppAuthContextProvider } from './contex/AppAuthContexProvider';
-import app from './firebase/firebasecore'
+import {Provider} from 'react-redux';
+import store from './store'
 axios.defaults.baseURL = 'http://192.168.18.29:8080';
 // axios.defaults.headers.common[ 'content-type'] = 'application/json'
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
-  <AppAuthContextProvider>
-  <React.StrictMode>
+<Provider store={store}>
+  {/* <AppAuthContextProvider> */}
+  {/* <React.StrictMode> */}
     <App />
-  </React.StrictMode>
-  </AppAuthContextProvider>
+  {/* </React.StrictMode> */}
+  {/* </AppAuthContextProvider> */}
+</Provider>
     
 );
 

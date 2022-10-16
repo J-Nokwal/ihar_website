@@ -81,7 +81,7 @@ export class PostRequest {
             throw error;
         }
     }
-    static async getPostByPageIdByUser(pageId = 0, byUser, queryTime){
+    static async getPostByPageIdByUser(pageId , byUser, queryTime){
         try {
             var response =await axios({
                 url:`/post/byPage/${pageId}/${byUser}`,
