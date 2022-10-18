@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate,use } from 'react-router-dom';
+import SearchBar, { SearchbarPage } from './components/searchBar';
 import Try from './components/Try';
 import { AppAuthContext } from './contex/AppAuthContexProvider';
 import HomePage from './pages/HomePage';
@@ -52,6 +53,7 @@ function App() {
           <Route path='user/:uid' element={<ProtectedHomeRoute><UserPage/></ProtectedHomeRoute>} replace={false}></Route>
           <Route path='search/:query' element={<ProtectedHomeRoute><SearchResultsPage/></ProtectedHomeRoute>} replace={false}></Route>
           <Route path='login' element={<LogInPage />}></Route>
+          <Route path='searchbar' element={<SearchbarPage />}></Route>
           <Route path='try' element={<Try />}></Route>
           <Route path="*" element={<h1> Invalid URL</h1>}></Route>
         </Route>

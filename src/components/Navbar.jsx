@@ -40,6 +40,8 @@ const Navbar = ({ showCreateRumorButton = true }) => {
                 if (userValue === '') {
                     return tempSuggestion.map((s) => {
                         return <li key={s}><button onClick={() => onsearchIconClick({ s })}>{s}</button></li>
+                        // return <button onClick={() => onsearchIconClick({ s })}>{s}</button>
+
                     });
                 }
                 return <li key={userValue}><button onClick={() => onsearchIconClick({ userValue })}>{userValue}</button></li>

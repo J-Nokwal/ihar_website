@@ -6,6 +6,7 @@ import feedSlice from "./feedStore";
 import commentsSlice from "./commentsStore";
 import routerSlice from "./routerStore";
 import userProfileSlice from "./userProfileStore";
+import searchSlice from "./searchStore";
 const store =configureStore({
     reducer :{
         auth: authSlice.reducer,
@@ -13,6 +14,7 @@ const store =configureStore({
         comments:commentsSlice.reducer,
         route:routerSlice.reducer,
         userProfile:userProfileSlice.reducer,
+        search:searchSlice.reducer,
         try:trySlice.reducer,
 
     }, 
