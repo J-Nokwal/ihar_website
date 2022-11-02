@@ -7,7 +7,10 @@ import axios from 'axios';
 import { AppAuthContextProvider } from './contex/AppAuthContexProvider';
 import {Provider} from 'react-redux';
 import store from './store'
-axios.defaults.baseURL = 'http://192.168.18.29:8080';
+// axios.defaults.baseURL = 'http://192.168.18.29:8080';
+
+axios.defaults.baseURL = 'http://174.138.126.246:8080';
+
 // axios.defaults.headers.common[ 'content-type'] = 'application/json'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 

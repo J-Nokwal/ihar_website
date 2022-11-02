@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate,use } 
 import SearchBar, { SearchbarPage } from './components/searchBar';
 import Try from './components/Try';
 import { AppAuthContext } from './contex/AppAuthContexProvider';
+import DownloadPage from './pages/DownloadPage';
 import HomePage from './pages/HomePage';
 import LogInPage from './pages/LogInPage';
 import PostRumor from './pages/PostRumor';
@@ -54,6 +55,7 @@ function App() {
           <Route path='search/:query' element={<ProtectedHomeRoute><SearchResultsPage/></ProtectedHomeRoute>} replace={false}></Route>
           <Route path='login' element={<LogInPage />}></Route>
           <Route path='searchbar' element={<SearchbarPage />}></Route>
+          <Route path='download' element={<DownloadPage />}></Route>
           <Route path='try' element={<Try />}></Route>
           <Route path="*" element={<h1> Invalid URL</h1>}></Route>
         </Route>

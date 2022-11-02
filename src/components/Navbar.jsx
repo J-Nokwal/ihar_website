@@ -12,8 +12,9 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from "react-router-dom";
 
 import { useHistory } from "react-router-dom";
+import SearchBar from './searchBar';
 
-const Navbar = ({ showCreateRumorButton = true }) => {
+const Navbar = ({ showCreateRumorButton = true ,showValue=false}) => {
     const currentUser = useSelector((state) => state.auth.user);
     const inputBoxRef = useRef(null)
     const navigate = useNavigate();
@@ -117,7 +118,7 @@ const Navbar = ({ showCreateRumorButton = true }) => {
                     navigate("/")
                 }}><img src={appLogo} /></button></span>
                 {/* <input className='searchContainer' type="text" placeholder="Search.."></input> */}
-                <div className='searchContainer' onBlur={onFucusRemove} >
+                {/* <div className='searchContainer' onBlur={onFucusRemove} >
                     <input className='searchInput' type="text" placeholder="Search.."
                         ref={inputBoxRef} onChange={ontexInputChange} onFocus={ontexInputChange}
                         onKeyUp={(e) => {
@@ -131,7 +132,8 @@ const Navbar = ({ showCreateRumorButton = true }) => {
                         {showSuggestions(suggestions)}
                     </div>
 
-                </div>
+                </div> */}
+                <SearchBar showValue={showValue}/>
                 <div className='Navbuttons'>
                     {showCreateRumorButton && <IconButton className='postRumor' onClick={() => { navigate("/postRumor") }} sx={{ backgroundColor: "blue" }} ><AddIcon sx={{}} /></IconButton>}
                     <Button aria-describedby="profile-menu" onClick={handleAvatarClick}><Avatar className='profileButton' alt='Profile Pic' src={currentUser.ProfilePhotoLink}></Avatar></Button>
