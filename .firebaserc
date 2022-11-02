@@ -6,7 +6,8 @@
     "ihar-7ab4b": {
       "hosting": {
         "iheardarumor": [
-          "iheardarumor"
+          "iheardarumor",
+          "iheardarumor.web.app"
         ]
       }
     }
