@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target":"iheardarumor",
     "public": "y",
     "ignore": [
       "firebase.json",
