@@ -13,11 +13,11 @@ export const SearchbarPage = () => {
 
 
 const SearchBar = ({showValue=false}) => {
+  
   const inputBoxRef = useRef(null)
   const dispatch = useDispatch();
   const navigate = useNavigate()
   const searchState = useSelector((state) => state.search);
-
   
 useEffect(() => {
     if (showValue){
@@ -79,7 +79,7 @@ useEffect(() => {
   
 
   return (
-    <div className='SearchBar'>
+    <div   className='SearchBar'>
       <div className="searchBarWrapper" onBlur={onFocusRemove}>
         {searchState.isActive && <div className='searchSuggestions'>{showSuggestions(searchState.suggestions)} </div>}
         <input className='searchInput' type="text" placeholder="Search.."

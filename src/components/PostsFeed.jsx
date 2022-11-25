@@ -1,25 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useDispatch, useSelector } from 'react-redux'
-import  { openCommentBox } from '../store/commentsStore';
+import { openCommentBox } from '../store/commentsStore';
 import { getFeedsAction } from '../store/feedStore'
 import { BiDotsVerticalRounded } from "react-icons/bi"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { Avatar, Button, Divider, IconButton, Menu, MenuItem, Popover, Typography } from '@mui/material'
+import { Avatar, Divider, IconButton, Menu, MenuItem } from '@mui/material'
 import { pink, grey } from '@mui/material/colors'
-import { Comment, CommentBankOutlined, Send } from '@mui/icons-material'
+import { Comment, Send } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom';
 const PostsFeed = () => {
   const dispatch = useDispatch()
+
+
+
+
   useEffect(() => {
     dispatch(getFeedsAction(true));
-  }, [dispatch])
+  }, [])
   const moreLoading = useSelector((state) => state.feed.moreLoading);
   const posts = useSelector((state) => state.feed.posts);
 
   const hasRechedMax = useSelector((state) => state.feed.hasRechedMax);
   console.log("moreloading :", moreLoading);
-  const onCommentsButtonPressed=(postId)=>{
+  const onCommentsButtonPressed = (postId) => {
     dispatch(openCommentBox(postId))
   }
   return (
@@ -35,13 +40,15 @@ const PostsFeed = () => {
           </p>
         }
       >
-        {posts.map((post, i) => <PostContainer  onCommentsButtonPressed={onCommentsButtonPressed} post={post} key={i} />)}
+        {posts.map((post, i) => <PostContainer onCommentsButtonPressed={onCommentsButtonPressed} post={post} key={i} />)}
       </InfiniteScroll>
     </div>
   )
 }
 
-export const PostContainer = ({ onCommentsButtonPressed ,post }) => {
+export const PostContainer = ({ onCommentsButtonPressed, post }) => {
+  const navigator = useNavigate()
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -70,7 +77,10 @@ export const PostContainer = ({ onCommentsButtonPressed ,post }) => {
   return (
     <div className='postsContainer'>
       <div className='postTop'>
-        <IconButton className='ProfilePhoto'> <Avatar variant='circular' alt="Profile Pic" src={(post.postFrom.ProfilePhotoLink !== '') ? post.postFrom.ProfilePhotoLink : "https://firebasestorage.googleapis.com/v0/b/ihar-7ab4b.appspot.com/o/profilePics%2F2022-08-13T00%3A30%3A17.633397?alt=media&token=8e93f5b2-8ade-4d27-9b3e-a69d92b9b7d5"} /></IconButton>
+        <IconButton className='ProfilePhoto' onClick={() => {
+          navigator("/user/" + post.postFrom.userId)
+        }} >
+          <Avatar variant='circular' alt="Profile Pic" src={(post.postFrom.ProfilePhotoLink !== '') ? post.postFrom.ProfilePhotoLink : "https://firebasestorage.googleapis.com/v0/b/ihar-7ab4b.appspot.com/o/profilePics%2F2022-08-13T00%3A30%3A17.633397?alt=media&token=8e93f5b2-8ade-4d27-9b3e-a69d92b9b7d5"} /></IconButton>
         <h5 className='profileName' >{post.postFrom.FirstName} {post.postFrom.LastName}</h5>
         <IconButton aria-describedby={id} onClick={handleClick} ><BiDotsVerticalRounded /></IconButton>
         <Menu id={id} anchorEl={anchorEl} open={open} onClose={handleClose}>
@@ -83,7 +93,7 @@ export const PostContainer = ({ onCommentsButtonPressed ,post }) => {
       <img className='postPhoto' height='20px' loading='lazy' src={(post.post_photo_link !== '') ? post.post_photo_link : "https://firebasestorage.googleapis.com/v0/b/ihar-7ab4b.appspot.com/o/profilePics%2F2022-08-13T00%3A30%3A17.633397?alt=media&token=8e93f5b2-8ade-4d27-9b3e-a69d92b9b7d5"}></img>
       <div className='actionButtons'>
         <IconButton onClick={() => setActive(!active)} >{active ? <FavoriteIcon sx={{ color: pink[500] }} /> : <FavoriteBorderIcon sx={{ color: grey }} />} </IconButton>
-        <IconButton onClick={()=>{onCommentsButtonPressed(post.ID)}}> <Comment /></IconButton>
+        <IconButton onClick={() => { onCommentsButtonPressed(post.ID) }}> <Comment /></IconButton>
         <IconButton > <Send /></IconButton>
       </div>
       <h5 className='likes'>Likes {post.likes}</h5>
@@ -92,7 +102,7 @@ export const PostContainer = ({ onCommentsButtonPressed ,post }) => {
       {/* <button className='showMoreButton' onClick={triggerShowmore} >Read More</button> */}
       <div className='empty'></div>
       {/* {showComments && <div className="commentsBox"></div>}     */}
-      </div>
+    </div>
   );
 }
 

@@ -1,7 +1,6 @@
-import { createAsyncThunk, createSlice, Store,ThunkAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { appAuth } from '../firebase/AppAuth'
 import { CommentsRequests } from "../Requests/CommentsRequests";
-import { UsersRequests } from "../Requests/UserRequests";
 
 const commentsSlice = createSlice({
     name: 'comments',
@@ -23,6 +22,7 @@ const commentsSlice = createSlice({
             state.error=action.payload.error??state.error
         },
         triggerCommentBox(state,action){
+
             state.showCommentsBox = action.payload.showCommentsBox;
         },
         addComment(state,action){
@@ -60,7 +60,6 @@ export const postComment = createAsyncThunk('comments/postComment', async ( { me
         postCommentsloading:true,
     }));
     
-    var  crrState =thunkApi.getState() ;
     var responseMessage=await CommentsRequests.createComment({
         userId:appAuth.auth.currentUser?.uid,
         postId:postId,

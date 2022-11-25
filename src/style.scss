@@ -4,8 +4,14 @@
     }
 }
 
+@mixin table {
+    @media screen and (max-width: 734px) {
+        @content;
+    }
+}
+
 @mixin laptop {
-    @media screen and (min-width: 453px) {
+    @media screen and (min-width: 734px) {
         @content;
     }
 }
@@ -118,6 +124,7 @@
 
 
 }
+
 .downloadContainer {
 
     background-image: url('./img/background.png');
@@ -151,7 +158,8 @@
             margin-bottom: 20px;
             margin-top: 20px;
         }
-        .downloadButton{
+
+        .downloadButton {
             height: 50px;
             border-radius: 30px;
             box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
@@ -160,9 +168,10 @@
             // color: aliceblue;
 
         }
-        .orlogin{
+
+        .orlogin {
             margin-top: 10px;
-            color:#3390ff;
+            color: #3390ff;
         }
 
         // button {
@@ -409,8 +418,10 @@
 
 
         // height: 100vh;
-        @include mobile {
+        @include table() {
             right: 0;
+            // width: 100%;
+
         }
 
         .postsContainer {
@@ -507,8 +518,8 @@
         top: 0;
         width: 340px;
         padding: 10px 10px 10px 10px;
-
-        @include mobile {
+        
+        @include table() {
             left: auto;
         }
 
@@ -523,7 +534,11 @@
             width: 100%;
             padding-bottom: 10px;
             overflow: hidden;
-
+           @include table(){
+            -webkit-box-shadow: 0 0 10px rgb(0,0,0);
+            -moz-box-shadow: 0 0 10px rgb(0,0,0);
+           }
+            
             .commentBoxTop {
                 display: flex;
                 position: relative;
@@ -587,7 +602,52 @@
             }
         }
     }
+    .aboutBoxWrapper{
 
+        background-color: transparent;
+        position: fixed;
+        left: 50%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 70px;
+        bottom :0;
+        width: 340px;
+        padding: 10px 10px 20px 10px;
+        
+        @include table() {
+            left: auto;
+        }
+        .aboutBox{
+            display: flex;
+            position: relative;
+            border-radius: 15px;
+            flex-direction: column;
+            background-color: aliceblue;
+            height: 30vh;
+            width: 100%;
+            padding-bottom: 10px;
+            overflow: hidden;
+            align-items: center;
+            h3{
+                font-weight: normal;
+                margin: 5px;
+            }
+           @include table(){
+            -webkit-box-shadow: 0 0 10px rgb(0,0,0);
+            -moz-box-shadow: 0 0 10px rgb(0,0,0);
+           }
+           .appLogo{
+            height: 70%;
+           }
+           .heart{
+            color: red;
+           }
+           .githubLink{
+            color: gray;
+           }
+        }
+
+    }
     .userSearchResultsBoxWrapper {
 
         background-color: transparent;
@@ -597,14 +657,24 @@
         flex-direction: column;
         margin-top: 70px;
         top: 0;
+        height: 100%;
         width: 340px;
         padding: 10px 10px 10px 10px;
+
+        @include table() {
+            position: relative;
+            left: auto;
+            top: 0px;
+            margin-top: 0;
+            height: 200px;
+        }
 
         .userSearchResultsBox {
             display: flex;
             position: relative;
             border-radius: 15px;
             flex-direction: column;
+            height: 100%;
             background-color: aliceblue;
             max-height: 50vh;
             width: 100%;
@@ -624,15 +694,37 @@
 
             .users {
                 scroll-behavior: smooth;
+                display: flex;
                 overflow-y: scroll;
                 padding-top: 5px;
-                .singleuser{
+                height: 100%;
+                flex-direction: column;
+                .singleuser {
                     display: flex;
                     height: 50px;
                     align-items: center;
+                    @include table(){
+                        height: 100%;
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                    .ProfilePhoto{
+                        @include table(){
+                            flex-direction: column;
+                        }    
+                        font-size: medium;
+                        color: black;
+                    }
                 }
+                @include table(){
+                    flex-direction: row;
+                    overflow-y: hidden;
+                }
+
                
+
             }
+
             ::-webkit-scrollbar-track {
                 margin-top: 0;
                 background-image: none;
@@ -642,7 +734,8 @@
                 background-color: #5d5d5e67;
             }
         }
-        .nouserfound{
+
+        .nouserfound {
             display: flex;
             align-self: center;
         }
@@ -755,8 +848,10 @@
         width: 340px;
         padding: 10px 10px 10px 10px;
 
-        @include mobile {
+        @include table() {
             left: auto;
+            position: relative;
+            margin-top: 0px;
         }
 
         .userBox {
@@ -805,7 +900,7 @@
 
         }
     }
-    
+
 
 }
 
@@ -910,3 +1005,18 @@
     }
 
 }
+
+.addTopPaddingForInfiniteScroll {
+    @include table() {
+        // padding-top: attr(height)"";
+        padding-top: 210px;
+    }
+}
+.blur { 
+	-webkit-filter: blur(3px); 
+	-moz-filter: blur(3px); 
+	-o-filter: blur(3px); 
+	-ms-filter: blur(3px); 
+	filter: blur(3px);
+
+} 

@@ -1,17 +1,17 @@
-import React, { useContext, useEffect } from 'react';
+import React, {  useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate,use } from 'react-router-dom';
-import SearchBar, { SearchbarPage } from './components/searchBar';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import  { SearchbarPage } from './components/searchBar';
 import Try from './components/Try';
-import { AppAuthContext } from './contex/AppAuthContexProvider';
 import DownloadPage from './pages/DownloadPage';
 import HomePage from './pages/HomePage';
 import LogInPage from './pages/LogInPage';
+import PostPage from './pages/PostPage';
 import PostRumor from './pages/PostRumor';
+import SearchBarPage from './pages/SearchBarPage';
 import SearchResultsPage from './pages/SearchResultsPage';
 import UserPage from './pages/UserPage';
 import { checkinitialAuthAction } from './store/authStore';
-import routerSlice from './store/routerStore';
 import "./style.scss"
 var dlink="/";
 function App() {
@@ -19,6 +19,7 @@ function App() {
   // const navigate = useNavigate();
   
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(checkinitialAuthAction());
   }, []);
@@ -33,7 +34,7 @@ function App() {
     }
     
     else {
-     if (dlink!="/"){ 
+     if (dlink!=="/"){ 
       var temp=dlink;
       console.log("navigating to ",dlink);
       dlink="/";
@@ -52,7 +53,9 @@ function App() {
           <Route index element={<ProtectedHomeRoute><HomePage /></ProtectedHomeRoute>} replace={true}  ></Route>
           <Route path='postRumor' element={<ProtectedHomeRoute><PostRumor /></ProtectedHomeRoute>} replace={false}></Route>
           <Route path='user/:uid' element={<ProtectedHomeRoute><UserPage/></ProtectedHomeRoute>} replace={false}></Route>
+          <Route path='post/:uid' element={<ProtectedHomeRoute><PostPage/></ProtectedHomeRoute>} replace={false}></Route>
           <Route path='search/:query' element={<ProtectedHomeRoute><SearchResultsPage/></ProtectedHomeRoute>} replace={false}></Route>
+          <Route path='searchbar' element={<ProtectedHomeRoute><SearchBarPage/></ProtectedHomeRoute>} replace={false}></Route>
           <Route path='login' element={<LogInPage />}></Route>
           <Route path='searchbar' element={<SearchbarPage />}></Route>
           <Route path='download' element={<DownloadPage />}></Route>

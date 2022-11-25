@@ -10,7 +10,7 @@ import store from './store'
 // axios.defaults.baseURL = 'http://192.168.18.29:8080';
 
 // axios.defaults.baseURL = 'https://174.138.126.246';
-axios.defaults.baseURL = 'https://iheardarumor.social';
+axios.defaults.baseURL = 'https://www.iheardarumor.social';
 
 // axios.defaults.headers.common[ 'content-type'] = 'application/json'
 const root = ReactDOM.createRoot(document.getElementById('root'));

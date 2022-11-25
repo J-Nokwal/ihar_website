@@ -39,16 +39,17 @@ const UserPage = () => {
           <div className='postFeedsContainer'>
             <InfiniteScroll dataLength={user.posts.length} >
               {/* <h1>user Posts</h1> */}
-              {user.posts.length===0 && <div className='noPostFound'> <h3>No Post Found </h3>
+              {!user.error && !user.isloading && user.user &&<UserBox user={user.user} />}
+              {user.posts.length===0 &&!user.isloading&& <div className='noPostFound'> <h3>No Post Found </h3>
               <h3>For This User</h3></div>}
               {user.posts.map((post, i) => <PostContainer onCommentsButtonPressed={onCommentsButtonPressed} post={post} key={i} />)}
             </InfiniteScroll>
           </div>
         </div>
       }
-      {!user.error && !user.isLoading && user.user &&<UserBox user={user.user} />}
+      {/* {!user.error && !user.isloading && user.user &&<UserBox user={user.user} />} */}
       {
-        !user.error && !user.isLoading &&
+        !user.error && !user.isloading &&
         <CommentsBox></CommentsBox>
       }
       <div><Navbar></Navbar></div>

@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { updateProfile } from "firebase/auth";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { appAuth } from '../firebase/AppAuth'
+import { appFireBaseStorage } from "../firebase/FireBaseStorage.ts";
 import { AvatarRequests } from "../Requests/AvatarRequest";
 import { UsersRequests } from "../Requests/UserRequests";
 
@@ -35,6 +37,7 @@ export const checkAuthAction = createAsyncThunk('auth/checkAuthentication', asyn
         } catch (error) {
             if(error.code==="1002"){
                 user =await createuserInServer();
+                console.log("creatinfg user in server");
             }
         }
         console.log("user");
@@ -102,6 +105,8 @@ export const signInWithGoogleAction = () => {
             // }
             console.log("signedup with google");
             dispatch(checkAuthAction());
+            console.log("hereeeeeeeeeeeeeeee");
+
             
         } catch (error) {
             // console.log(error);
@@ -147,6 +152,10 @@ var createuserInServer = async () => {
         var avatarByte = await AvatarRequests.getNewAvatar();
         console.log(typeof (avatarByte));
         //TODO: add firestore functionality
+        var avatarlink=await appFireBaseStorage.uploadProfilePic(avatarByte);
+        await updateProfile(appAuth.auth.currentUser, {
+         photoURL:avatarlink 
+          })
     }
   var user=await  UsersRequests.createUser({
         userId:currentUser.uid.toString(),

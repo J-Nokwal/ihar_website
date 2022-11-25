@@ -8,15 +8,14 @@ import { appAuth } from '../firebase/AppAuth';
 import { useSelector } from 'react-redux';
 import { Avatar, Button, IconButton, Menu, MenuItem } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
 import { useNavigate } from "react-router-dom";
 
-import { useHistory } from "react-router-dom";
 import SearchBar from './searchBar';
 
-const Navbar = ({ showCreateRumorButton = true ,showValue=false}) => {
+const Navbar = ({ showCreateRumorButton = true, showValue = false }) => {
     const currentUser = useSelector((state) => state.auth.user);
     const inputBoxRef = useRef(null)
+    const [showsearchbar, setshowsearchbar] = useState(window.innerWidth>=453)
     const navigate = useNavigate();
     var tempSuggestion = [
         "sfsd",
@@ -28,6 +27,21 @@ const Navbar = ({ showCreateRumorButton = true ,showValue=false}) => {
         "qeaefsfsd",
         "behsfsd",
     ];
+    useEffect(() => {
+        var x = window.matchMedia("(max-width: 453px)")
+        function navbarSizeHandler(ev) {
+            const { innerWidth } = window;
+            if (innerWidth < 453) {
+                setshowsearchbar(false)
+            } else {
+                setshowsearchbar(true);            }
+        }
+        x.addEventListener("change", navbarSizeHandler)
+        return ()=>{
+            x.removeEventListener("change",navbarSizeHandler)
+        }
+    }, [])
+
     const [suggestions, setSuggestions] = useState([]);
     var c = 0;
     function showSuggestions(list) {
@@ -51,7 +65,6 @@ const Navbar = ({ showCreateRumorButton = true ,showValue=false}) => {
                 return null;
             }
 
-            listData = <li>{userValue}</li>;
         } else {
             listData = list.map((s) => {
                 return <li key={s}><button onClick={() => onsearchIconClick({ s })}>{s}</button></li>
@@ -85,10 +98,7 @@ const Navbar = ({ showCreateRumorButton = true ,showValue=false}) => {
         }
         return results.data[1];
     };
-    let onFucusRemove = () => {
-        console.log("focus removed");
-        setSuggestions([])
-    }
+    
 
     var onsearchIconClick = (s) => {
 
@@ -109,6 +119,14 @@ const Navbar = ({ showCreateRumorButton = true ,showValue=false}) => {
     const handleProfileMenuClose = () => {
         setAnchorAvatarEl(null);
     };
+    const handleProfileButtonClicked=()=>{
+        navigate("/user/"+currentUser.userId);
+        handleProfileMenuClose();
+    }
+    const downloadApkButtonPressed=()=>{
+        navigate("/download");
+        handleProfileMenuClose();
+    }
     return (
         <div className="topNav">
             <div className='topNavWrapper'>
@@ -133,8 +151,9 @@ const Navbar = ({ showCreateRumorButton = true ,showValue=false}) => {
                     </div>
 
                 </div> */}
-                <SearchBar showValue={showValue}/>
+                {showsearchbar && <SearchBar  showValue={showValue} />}
                 <div className='Navbuttons'>
+                    {!showsearchbar && <IconButton onClick={() => { navigate("/searchbar") }}  sx={{width:'45px'}}  ><BiSearchAlt  /></IconButton>}                
                     {showCreateRumorButton && <IconButton className='postRumor' onClick={() => { navigate("/postRumor") }} sx={{ backgroundColor: "blue" }} ><AddIcon sx={{}} /></IconButton>}
                     <Button aria-describedby="profile-menu" onClick={handleAvatarClick}><Avatar className='profileButton' alt='Profile Pic' src={currentUser.ProfilePhotoLink}></Avatar></Button>
                     <Menu
@@ -146,9 +165,11 @@ const Navbar = ({ showCreateRumorButton = true ,showValue=false}) => {
                             'aria-labelledby': 'basic-button',
                         }}
                     >
-                        <MenuItem onClick={handleProfileMenuClose}>My Profile</MenuItem>
+                        <MenuItem onClick={handleProfileButtonClicked}>My Profile</MenuItem>
                         {/* <MenuItem onClick={handleProfileMenuClose}>My account</MenuItem> */}
+                        <MenuItem onClick={downloadApkButtonPressed}>Download Apk</MenuItem>
                         <MenuItem onClick={logOutButtonPressed}>Logout</MenuItem>
+
                     </Menu>
                 </div>
 

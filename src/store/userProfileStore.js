@@ -27,6 +27,8 @@ export default userProfileSlice;
 export const getUserDetails = createAsyncThunk('userProfile/getUserDetails', async (uid, thunkApi) => {
     thunkApi.dispatch(userProfileSlice.actions.replaceData({
         isloading: true,
+        posts:[],
+        error: null,
     }));
     try {
         var user = await UsersRequests.getUser(uid);

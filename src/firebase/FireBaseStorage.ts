@@ -4,6 +4,8 @@ class AppFireBaseStorage {
 
     async uploadImage(file: File): Promise<string> {
         var date = new Date().toISOString();
+        console.log("in firestore ",file.type);
+        
         var imagesRef = ref(coreStorage, "images/" + date + file.name)
         await uploadBytes(imagesRef, file);
         var downloadURL = await getDownloadURL(imagesRef);
