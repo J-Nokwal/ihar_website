@@ -12,6 +12,9 @@ photos and things they heard about and want to spread that rumor.
 
 Backend on Go : [GitHub Repo](https://github.com/J-Nokwal/ihar_backend)
 
+Mobile App on Flutter : [GitHub Repo](https://github.com/J-Nokwal/ihar_flutter)
+
+
 ## Tech Stack
 
 **Client:** Flutter React
